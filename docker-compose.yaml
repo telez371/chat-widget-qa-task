@@ -12,3 +12,17 @@ services:
       - ./:/app
     command: poetry run pytest -s api_tests/tests --alluredir=api_tests/allure-results
     working_dir: /app
+
+  e2e-tests:
+    build:
+      context: .
+      dockerfile: e2e.Dockerfile
+      args:
+        - POETRY_GROUP=e2e
+    image: chat-widget-qa-task:e2e
+    volumes:
+      - ./:/app
+    command: poetry run pytest -s e2e_tests/tests
+      #--alluredir=api_tests/allure-results
+    working_dir: /app
+
