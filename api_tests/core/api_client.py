@@ -11,8 +11,7 @@ class ApiClient:
     async def __aenter__(self):
         self._client = httpx.AsyncClient(
             headers={
-                "Content-Type": "application/json",
-                "Accept": "application/json"
+                "Accept": "application/json",
             },
             base_url=self.base_url
         )

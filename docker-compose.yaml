@@ -10,6 +10,5 @@ services:
     image: chat-widget-qa-task:api
     volumes:
       - ./:/app
-    command: poetry run pytest -s
-#    api_tests/tests --alluredir=api_tests/allure-results
+    command: poetry run pytest -s api_tests/tests --alluredir=api_tests/allure-results
     working_dir: /app
