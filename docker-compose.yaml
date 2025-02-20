@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  api-tests:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+      args:
+        - POETRY_GROUP=api
+    image: chat-widget-qa-task:api
+    volumes:
+      - ./:/app
+    command: poetry run pytest -s api_tests/tests --alluredir=api_tests/allure-results
+    working_dir: /app

@@ -5,6 +5,8 @@ from api_tests.core.config import Config
 
 
 @pytest.fixture(scope="session")
-def api_client() -> ApiClient:
+async def api_client() -> ApiClient:
     config = Config()
-    return ApiClient(config)
+    client = ApiClient(config)
+    yield client
+    await client.close()
