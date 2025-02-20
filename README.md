@@ -13,6 +13,7 @@ docker build -t chat-widget-qa-task/base -f api.Dockerfile .
 
 ```shell
 docker run -it -v $(pwd):/app -w /app chat-widget-qa-task/base:latest poetry add [name-libs]
+docker run -it -v $(pwd):/app -w /app chat-widget-qa-task/base:latest poetry add --group api [name-libs]
 ```
 
 ```shell
