@@ -11,7 +11,7 @@ services:
     volumes:
       - ./:/app
     command: |
-      bash -c "poetry run pytest -s api_tests/tests --alluredir=allure-results; touch /app/.api-tests-completed"
+      bash -c "poetry run pytest -s api_tests/tests --alluredir=allure-results -p no:warnings && touch /app/.api-tests-completed"
     working_dir: /app
 
   e2e-tests:
@@ -26,5 +26,5 @@ services:
     depends_on:
       - api-tests
     command: |
-      bash -c "while [ ! -f /app/.api-tests-completed ]; do echo 'Waiting for api-tests to finish...'; sleep 2; done && poetry run pytest -s e2e_tests/tests --alluredir=allure-results"
+      bash -c "while [ ! -f /app/.api-tests-completed ]; do echo 'Waiting for api-tests to finish...'; sleep 2; done && poetry run pytest -s e2e_tests/tests --alluredir=allure-results -p no:warnings"
     working_dir: /app
