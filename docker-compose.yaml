@@ -10,7 +10,8 @@ services:
     image: chat-widget-qa-task:api
     volumes:
       - ./:/app
-    command: poetry run pytest -s api_tests/tests --alluredir=api_tests/allure-results
+    command: |
+      bash -c "poetry run pytest -s api_tests/tests --alluredir=allure-results; touch /app/.api-tests-completed"
     working_dir: /app
 
   e2e-tests:
@@ -22,7 +23,8 @@ services:
     image: chat-widget-qa-task:e2e
     volumes:
       - ./:/app
-    command: poetry run pytest -s e2e_tests/tests
-      #--alluredir=api_tests/allure-results
+    depends_on:
+      - api-tests
+    command: |
+      bash -c "while [ ! -f /app/.api-tests-completed ]; do echo 'Waiting for api-tests to finish...'; sleep 2; done && poetry run pytest -s e2e_tests/tests --alluredir=allure-results"
     working_dir: /app
-

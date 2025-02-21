@@ -31,3 +31,19 @@ class BasePage:
             await expect(element).to_be_enabled(timeout=self.timeout)
             await expect(element).to_be_editable(timeout=self.timeout)
             await element.fill(value)
+
+    async def inner_text(self, selector: str) -> str:
+        with allure.step(f"Get inner text of element: {selector}"):
+            element = await self.get_element(selector)
+            await expect(element).to_be_visible(timeout=self.timeout)
+            return await element.inner_text()
+
+    async def upload_file(self, selector: str, file_path: str) -> None:
+        with allure.step(f"Upload file: {file_path} to {selector}"):
+            file_input = await self.get_element(selector)
+            await file_input.set_input_files(file_path)
+
+    async def is_file_uploaded(self, selector: str) -> bool:
+        with allure.step(f"Check if file is uploaded to {selector}"):
+            file_element = await self.get_element(selector)
+            return await file_element.is_visible(timeout=self.timeout)
