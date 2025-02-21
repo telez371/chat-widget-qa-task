@@ -34,8 +34,7 @@
 
 1. Клонируйте репозиторий:
 ```bash
-git clone git@github.com:telez371/chat-widget-qa-task.git
-cd chat-widget-qa-task
+git clone https://github.com/telez371/chat-widget-qa-task.git
 ```
 
 2. Соберите Docker образы:
