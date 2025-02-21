@@ -6,13 +6,18 @@ from e2e_tests.pages.open_chat_page import OpenChatPage
 
 
 @pytest.fixture
+@allure.feature("Chat Widget")
+@allure.story("Open Chat")
+@allure.title("Opening the chat widget and verifying the title")
 async def open_chat(page: Page):
-    open_chat = OpenChatPage(page, "https://autofaq.ai/")
-    await open_chat.open()
+    with allure.step("Initializing OpenChatPage and navigating to the chat page"):
+        chat_page = OpenChatPage(page, "https://autofaq.ai/")
+        await chat_page.open()
 
-    with allure.step('Open chat'):
-        assertion_text = await open_chat.open_chat()
+    with allure.step("Opening the chat widget"):
+        assertion_text = await chat_page.open_chat()
 
-        assert assertion_text == "AutoFAQ.ai"
+    with allure.step("Verifying the chat title"):
+        assert assertion_text == "AutoFAQ.ai", f"Expected 'AutoFAQ.ai', but got '{assertion_text}'"
 
-        yield page
+    yield page
